@@ -1,76 +1,88 @@
-# AI Usage Report - Portfolio Assignment 2
+# AI Usage Report – Portfolio Assignment 3
 
 ## Project Overview
 
-This assignment built upon the Assignment 1 portfolio by adding interactive features, API integration, animations, and improved user feedback. The following AI tools were used throughout development.
+Assignment 3 extended the portfolio with advanced features: a graduation countdown timer, a login/session system with localStorage, improved image performance, a GitHub stats widget, a typing animation, and active nav highlighting. Claude AI was the primary tool used throughout.
 
 ---
 
 ## Tools Used & Use Cases
 
 ### Claude AI (Anthropic)
-**Use Case:** Mentorship, Guided Learning, Code Review, Debugging
+**Use Case:** Feature design, code generation, review, and documentation
 
-Claude AI was the primary tool used throughout Assignment 2. It was used in a mentorship style — explaining concepts first, then guiding implementation rather than generating complete solutions. Key areas where Claude assisted:
+Claude was used in a guided, iterative way — not as a one-shot generator. Workflow for each feature:
 
-- **Tab Switching Feature:** Explained the concept of using `data-category` attributes and `querySelectorAll` to filter DOM elements dynamically. Claude explained the logic before I wrote the code myself.
-- **API Integration:** Guided the integration of the Advice Slip API, explaining the `fetch()` chain, how to handle JSON responses, and how to handle errors with `.catch()`.
-- **Error Handling:** Explained why empty `.catch()` blocks are a problem and guided me to add user-friendly error messages.
-- **CSS Animations:** Explained `@keyframes`, `transition`, and `transform` properties and their role in improving UX.
-- **Debugging:** Helped identify bugs such as typos in element IDs and a `form` vs `from` typo in a keyframe definition.
+1. Describe the requirement and constraints
+2. Review Claude's proposed approach before any code was written
+3. Ask Claude to explain trade-offs (e.g., djb2 hash vs. plain text password, IntersectionObserver vs. pure lazy loading attribute)
+4. Accept, modify, or reject suggestions based on understanding
 
-### AWS CodeWhisperer
-**Use Case:** Initial Code Generation (Assignment 1 base)
+**Specific areas where Claude assisted:**
 
-AWS CodeWhisperer was used in Assignment 1 to generate the initial HTML, CSS, and JavaScript structure. This boilerplate carried forward into Assignment 2 as the starting point, with all new features written manually on top of it.
+- **Login system:** Explained the difference between session tokens and persistent accounts, and why removing only `userName` on logout (not the stored password hash) lets users stay registered.
+- **Countdown math:** Walked through the millisecond subtraction and modulo chain for extracting days/hours/minutes/seconds cleanly.
+- **IntersectionObserver:** Explained how it defers image processing until the element is near the viewport, versus `loading="lazy"` which only defers the network request.
+- **CSS tabular-nums:** Introduced `font-variant-numeric: tabular-nums` to prevent the countdown layout from jumping when digits change width.
+- **Modal accessibility:** Suggested `aria-hidden`, `role="dialog"`, `aria-modal`, and Escape-key handling.
+- **Code structure:** Recommended grouping all DOM references in one `elements` object and all state in a `state` object for readability and maintainability.
 
 ### GitHub Copilot
-**Use Case:** CSS Styling Generation
+**Use Case:** CSS property completion and minor JS boilerplate
 
-GitHub Copilot was used to generate CSS styling code to shorten development time, particularly for layout and visual design. All generated CSS was reviewed and understood before being included in the project.
+Used for autocompleting repetitive CSS (e.g., vendor-prefixed properties, repeated grid patterns) and small JS snippets like `padStart` usage. All suggestions were reviewed before acceptance.
+
+### AWS CodeWhisperer (carry-forward from Assignment 1)
+**Use Case:** Original HTML/CSS scaffold
+
+The base HTML and CSS from Assignment 1 was generated with CodeWhisperer and has been progressively modified. No new CodeWhisperer output was added in Assignment 3.
 
 ---
 
-## What I Wrote vs What AI Generated
+## What I Wrote vs. What AI Generated
 
-| Feature | Written By |
-|--------|-----------|
-| Initial HTML/CSS structure | AWS CodeWhisperer (Assignment 1) |
-| CSS styling | GitHub Copilot (reviewed and modified) |
-| Tab switching JS logic | Me (with conceptual guidance from Claude) |
-| Advice API fetch function | Me (with structural guidance from Claude) |
-| Form validation logic | Me |
-| Active tab highlight logic | Me |
-| HTML structure updates | Me |
+| Feature | Source |
+|---|---|
+| Overall HTML structure | Me (with Claude review) |
+| Login modal HTML | Claude (reviewed and adapted) |
+| Countdown HTML/CSS | Claude (reviewed and adapted) |
+| Countdown JS logic | Claude (explained, then accepted after understanding) |
+| Login/logout JS logic | Claude (reviewed, tested manually, modified alert → inline validation messages) |
+| Project filter + localStorage | Me (from Assignment 2, extended) |
+| GitHub API fetch | Claude (reviewed) |
+| Typing animation JS | Claude (reviewed and traced through manually) |
+| IntersectionObserver for images | Claude (explained concept first, then generated) |
+| Contact form personalization | Me |
+| CSS custom properties / theming | Me (carry-forward) |
+| README & documentation | Me (Claude assisted with structure) |
 
 ---
 
 ## Benefits
 
-1. **Concept-first learning:** Claude always explained the *why* before the *how*, which helped me understand rather than just copy.
-2. **Debugging support:** Having an AI explain error messages saved significant time.
-3. **API discovery:** Claude helped identify a working free API when the original Quotable API had an expired certificate.
-4. **Time efficiency:** AI-generated CSS and boilerplate allowed focus on learning JavaScript interactivity rather than spending time on styling details.
+1. **Speed on well-understood patterns:** Features like `localStorage` session restore and modal open/close logic were generated quickly and correctly, saving time on boilerplate.
+2. **Concept-first explanations:** Claude explained *why* before *how* — for example, explaining that `aria-hidden` on a modal needs to be toggled (not just set once) for screen readers to track state changes.
+3. **Trade-off awareness:** Learned that `loading="lazy"` + `decoding="async"` + explicit dimensions is the correct three-part image optimization combination, not just one of the three.
+4. **Code organization:** The `state` object + `elements` object pattern made the JS much easier to read and debug.
 
 ## Challenges
 
-1. **Avoiding over-reliance:** Required conscious effort to attempt code before asking for help.
-2. **Dead APIs:** The first suggested API (Quotable) had an expired SSL certificate, requiring a switch mid-development.
-3. **Understanding async fetch:** The `.then()` chain took time to fully understand.
+1. **Avoiding copy-paste without understanding:** Required deliberately reading each function before accepting it. The typing animation in particular needed tracing through on paper to understand the `charIndex`/`lineIndex` state machine.
+2. **Alert vs. inline validation:** Claude initially used `alert()` for form errors. Replaced with inline error messages in the modal for better UX — this required modifying the generated code.
+3. **Modal display approach:** Claude's first suggestion used `display: none` toggled by JS. Switched to `aria-hidden` attribute toggling with CSS `[aria-hidden="true"] { display: none }` for better accessibility semantics.
 
 ---
 
 ## Learning Outcomes
 
-- **DOM Traversal:** Selecting multiple elements with `querySelectorAll` and looping with `forEach`
-- **Data Attributes:** Using `data-category` to tag and filter HTML elements
-- **Fetch API:** Making real HTTP requests, parsing JSON, and handling errors
-- **CSS Animations:** Writing `@keyframes` and applying `transition` for smooth UI effects
-- **Debugging:** Using the browser console (`F12`) to identify and fix runtime errors
-- **Async JS:** Understanding why `fetch` values must be used inside `.then()` callbacks
+- **IntersectionObserver API:** How to lazily execute JS logic (not just load images) when elements enter the viewport.
+- **localStorage scoping:** Why storing a session token (`userName`) separately from account data (`portfolioUser`) allows logout without deleting the account.
+- **CSS font-variant-numeric:** A small but impactful typographic property that prevents layout jitter in countdowns and live numbers.
+- **ARIA for modals:** The correct combination of `role`, `aria-modal`, `aria-hidden`, and keyboard trap patterns.
+- **Async/await vs. .then():** Continued reinforcement — Assignment 2 used `.then()` chains; Assignment 3 uses `async/await` for the GitHub fetch, which is cleaner for sequential API calls.
 
 ---
 
 ## Responsible Use Statement
 
-All AI assistance was used to support learning, not replace it. AI-generated code was reviewed, tested, and understood before being included. Claude was used as a tutor, AWS CodeWhisperer provided initial scaffolding, and Copilot assisted with styling — all with full understanding of the output.
+Every AI-generated code block was read, traced through, and tested before inclusion. In two cases (alert-based validation, display-toggle modal), the generated approach was rejected and rewritten. Claude was used as a senior collaborator explaining reasoning — not as a replacement for understanding the code. All final decisions about what to include were made independently.

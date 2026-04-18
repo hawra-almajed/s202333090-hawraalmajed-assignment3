@@ -3,71 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Hawraa Al-Majed | Portfolio</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <!-- start navigation part -->
+ 
+    <!-- ===== NAVIGATION ===== -->
     <nav>
         <h2>Portfolio</h2>
-        <button id="themeToggle">🌙</button>
+        <ul class="nav-links">
+            <li><a href="#about"    class="nav-link">About</a></li>
+            <li><a href="#timer"    class="nav-link">Countdown</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#advice"   class="nav-link">Advice</a></li>
+            <li><a href="#contact"  class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <button id="loginBtn" class="login-btn">Login</button>
+            <button id="themeToggle"><span class="theme-icon">🌙</span></button>
+        </div>
     </nav>
-    <!-- end navigation part -->
-    <!-- start about me section -->
+ 
+    <!-- ===== LOGIN MODAL ===== -->
+    <div id="loginModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Login">
+        <div class="modal-box">
+            <button id="closeModal" class="modal-close" aria-label="Close">✕</button>
+ 
+            <!-- Login / Register Form -->
+            <div id="loginView">
+                <h3>Welcome</h3>
+                <p class="modal-sub">Sign in or create an account</p>
+                <form id="loginForm" novalidate>
+                    <label for="loginName">Name</label>
+                    <input id="loginName" type="text" placeholder="Your name" autocomplete="name" required>
+ 
+                    <label for="loginEmail">Email</label>
+                    <input id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
+ 
+                    <label for="loginPassword">Password</label>
+                    <input id="loginPassword" type="password" placeholder="Min. 6 characters" autocomplete="current-password" required>
+ 
+                    <button type="submit" class="btn-primary">Continue</button>
+                </form>
+            </div>
+ 
+            <!-- Logged-in View -->
+            <div id="loggedInView" class="hidden">
+                <div class="logged-in-avatar">👤</div>
+                <h3>Hi, <span id="welcomeName"></span>!</h3>
+                <p id="userEmail" class="modal-sub"></p>
+                <button id="logoutBtn" class="btn-outline">Log Out</button>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- ===== ABOUT ===== -->
     <section id="about">
-        <div class="container">
-            <h1 id="greeting"></h1>
-            <h2>About Me</h2>
-            <p>I'm a Computer Sciense student at KFUPM, and I like web development. I aspire to become a full-stack or a back-end web developer.</p>
+        <div class="container about-grid">
+            <div class="about-text">
+                <h1 id="greeting"></h1>
+                <h2>About Me</h2>
+                <p>I'm a Computer Science student at KFUPM, passionate about web development. I aspire to become a full-stack or back-end web developer and love building things that solve real problems.</p>
+            </div>
+            <!-- Hero typing animation -->
+            <div class="code-block" aria-hidden="true">
+                <div class="code-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="code-filename">developer.js</span>
+                </div>
+                <pre id="typingCode" class="typing-pre"></pre>
+            </div>
         </div>
     </section>
-    <!-- end about me section -->
-    <!-- Start Advice Section  -->
-     <section id="advice">
+ 
+    <!-- ===== GRADUATION COUNTDOWN ===== -->
+    <section id="timer">
         <div class="container">
-            <h2>Advice of the Day</h2>
-            <div id="content"></div>
-            <button id="adviceBtn">New Advice</button>
-        </div>
-     </section>
-    <!-- End Quote Section  -->
-    <!-- start projects area -->
-    <section id="projects">
-        <div class="container">
-            <h2>Projects</h2>
-            <button id="allBtn" class="tab-btn">All</button>
-            <button id="webBtn" class="tab-btn">Web</button>
-            <button id="researchBtn" class="tab-btn">Research</button>
-
-            <div class="projects-grid">
-                <div class="project-card" data-category="web">
-                    <div class="project-img"><img src="./assets/images/Full stack screen.jpg"></div>
-                    <h3>Learning Fullstack-Development</h3>
-                    <p>Currently working on becoming a professional Fullstack developer by taking SWE363 course.</p>
+            <h2>Graduation Countdown</h2>
+            <p class="section-sub">Days until I finish my CS degree at KFUPM 🎓</p>
+            <div class="countdown-grid">
+                <div class="countdown-block">
+                    <span id="days" class="countdown-num">000</span>
+                    <span class="countdown-label">Days</span>
                 </div>
-                <div class="project-card" data-category="research">
-                    <div class="project-img"><img src="./assets/images/AIED-human.jpg"></div>
-                    <h3>AI Research</h3>
-                    <p>Currently working on an independent research about AI & AIED.</p>
+                <div class="countdown-block">
+                    <span id="hours" class="countdown-num">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-block">
+                    <span id="minutes" class="countdown-num">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-block">
+                    <span id="seconds" class="countdown-num">00</span>
+                    <span class="countdown-label">Seconds</span>
                 </div>
             </div>
         </div>
     </section>
-    <!-- end projects area -->
-     <!-- start contact area -->
+ 
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            <div class="filter-row">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="research">Research</button>
+            </div>
+ 
+            <div class="projects-grid">
+                <div class="project-card" data-category="web">
+                    <div class="project-img">
+                        <img src="./assets/images/Full stack screen.jpg"
+                             alt="Fullstack development course screenshot"
+                             width="400" height="200"
+                             loading="lazy"
+                             decoding="async">
+                    </div>
+                    <h3>Learning Fullstack Development</h3>
+                    <p>Working on becoming a professional Fullstack developer through the SWE363 course at KFUPM.</p>
+                    <span class="project-tag">Web</span>
+                </div>
+ 
+                <div class="project-card" data-category="research">
+                    <div class="project-img">
+                        <img src="./assets/images/AIED-human.jpg"
+                             alt="AI and human interaction research illustration"
+                             width="400" height="200"
+                             loading="lazy"
+                             decoding="async">
+                    </div>
+                    <h3>AI Research</h3>
+                    <p>Independent research on AI & AIED — exploring how artificial intelligence intersects with education.</p>
+                    <span class="project-tag">Research</span>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- ===== GITHUB WIDGET ===== -->
+    <section id="github">
+        <div class="container">
+            <div id="githubWidget" class="github-widget hidden">
+                <span class="gh-icon">⭐</span>
+                <div class="gh-stat"><span id="repoCount">–</span><small>Repos</small></div>
+                <div class="gh-stat"><span id="followers">–</span><small>Followers</small></div>
+                <div class="gh-stat"><span id="stars">–</span><small>Stars</small></div>
+                <a href="https://github.com/s202333090" target="_blank" rel="noopener" class="gh-link">View GitHub →</a>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- ===== ADVICE ===== -->
+    <section id="advice">
+        <div class="container">
+            <h2>Advice of the Day</h2>
+            <div id="content">Loading advice…</div>
+            <button id="adviceBtn">New Advice</button>
+        </div>
+    </section>
+ 
+    <!-- ===== CONTACT ===== -->
     <section id="contact">
         <div class="container">
             <h2>Contact</h2>
-            <form id="contactForm">
-                <input type="text" placeholder="Name" required>
-                <input type="email" placeholder="Email" required>
-                <textarea placeholder="Message" rows="5" required></textarea>
+            <form id="contactForm" novalidate>
+                <input id="name"    type="text"  placeholder="Name"    required>
+                <input id="email"   type="email" placeholder="Email"   required>
+                <textarea id="message" placeholder="Message" rows="5"  required></textarea>
                 <button type="submit">Send Message</button>
             </form>
-            <p id="formMessage"></p>
+            <p id="formMessage" class="form-message hidden"></p>
         </div>
     </section>
-    <!-- end contact area -->
+ 
+    <div id="userBadge" class="user-badge hidden" aria-live="polite">
+        👤 <span id="badgeName"></span>
+    </div>
+ 
     <script src="./js/script.js"></script>
 </body>
 </html>
+ 

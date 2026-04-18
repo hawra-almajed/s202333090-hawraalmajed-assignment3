@@ -112,3 +112,60 @@ Computer Science Student at KFUPM
 ---
 
 For detailed technical documentation, see [docs/technical-documentation.md](docs/technical-documentation.md).
+
+---
+
+## Assignment 3 – Advanced Functionality
+
+### New Features Added
+
+**Graduation Countdown Timer**
+A live countdown (days / hours / minutes / seconds) in its own section that ticks down to graduation day in July 2027. The target date is set in one constant at the top of `script.js` — easy to change. Numbers use tabular-numeral font rendering so the layout never shifts as digits change.
+
+**Login & Session State Management**
+A modal with Name, Email, and Password fields handles both registration and sign-in using `localStorage`. Passwords are stored as a djb2 hash (never plain text). On every page load, the session is restored automatically. A fixed badge in the bottom-right corner always shows the logged-in user's first name. The nav Login button also updates to say "Hi, [Name]". Logging out removes only the session token, so the account persists for next time.
+
+**Remembered User Preferences**
+The active project filter tab is saved to `localStorage` and restored on reload. The dark/light theme preference was already persisted and continues to work. All choices survive a browser refresh.
+
+**Image Performance**
+Every project image now has `loading="lazy"` (deferred network load), `decoding="async"` (off-main-thread decode), explicit `width` and `height` attributes (prevents layout shift), and `object-fit: cover` in CSS (fills the container without stretching). An IntersectionObserver in `script.js` adds a `.loaded` fade-in class once each image enters the viewport.
+
+**GitHub Live Stats Widget**
+Fetches public repo count, follower count, and total star count from the GitHub API and displays them in a compact widget. If the API is unreachable, the widget stays hidden — no broken UI.
+
+**Hero Typing Animation**
+The About section now includes a styled code block with a typewriter animation cycling through lines of JavaScript that describe the developer, adding personality without images.
+
+**Active Navigation Highlighting**
+A scroll listener marks the current section's nav link as active in real time.
+
+**Personalized Contact Form**
+If the user is logged in, the success message after submitting the contact form addresses them by first name.
+
+### File Structure (updated)
+
+```
+├── index.html
+├── css/
+│   └── style.css
+├── js/
+│   └── script.js
+├── assets/
+│   └── images/
+├── docs/
+│   ├── ai-usage-report.md
+│   └── technical-documentation.md
+└── README.md
+```
+
+### Performance Notes
+
+Lighthouse / PageSpeed tips:
+- Images use `loading="lazy"` and explicit dimensions — run Lighthouse and the LCP / CLS scores should both improve.
+- Compress project images to WebP for further gains (tools: Squoosh, ImageOptim).
+- No external fonts or libraries are loaded — the only external calls are the GitHub API and Advice Slip API.
+
+### AI Tools Used (Assignment 3)
+
+Claude AI was used for the full implementation of Assignment 3 features. See `docs/ai-usage-report.md` for details.
