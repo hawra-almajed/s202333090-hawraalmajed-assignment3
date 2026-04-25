@@ -1,7 +1,7 @@
 const GRADUATION_DATE = new Date('2027-12-24T09:00:00');
 
 // GitHub username for the widget (set to empty string to hide widget if account doesn't exist)
-const GITHUB_USERNAME = '';
+const GITHUB_USERNAME = 'hawra-almajed';
 
 // ========================================
 // State Management
