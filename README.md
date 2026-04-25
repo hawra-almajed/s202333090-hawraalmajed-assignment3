@@ -1,4 +1,4 @@
-# Assignment 2 – Interactive Portfolio
+# Interactive Portfolio
 
 A modern portfolio website built on top of Assignment 1, with enhanced interactivity, animation, and dynamic user experience.
 
