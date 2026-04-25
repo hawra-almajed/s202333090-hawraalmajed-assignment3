@@ -1,8 +1,7 @@
-// Change this later
-const GRADUATION_DATE = new Date('2027-05-15T09:00:00');
+const GRADUATION_DATE = new Date('2027-12-24T09:00:00');
 
-// GitHub username for the widget
-const GITHUB_USERNAME = 's202333090';
+// GitHub username for the widget (set to empty string to hide widget if account doesn't exist)
+const GITHUB_USERNAME = '';
 
 // ========================================
 // State Management
@@ -55,6 +54,10 @@ const elements = {
   repoCount: document.getElementById('repoCount'),
   followers: document.getElementById('followers'),
   stars: document.getElementById('stars'),
+
+  // Advice
+  adviceContent: document.getElementById('content'),
+  adviceBtn: document.getElementById('adviceBtn'),
 
   // Hero typing
   typingCode: document.getElementById('typingCode')
@@ -364,7 +367,34 @@ function showFormMessage(text, type) {
 // GitHub API Integration
 // ========================================
 
+// ========================================
+// Advice API
+// ========================================
+
+async function fetchAdvice() {
+  if (!elements.adviceContent) return;
+
+  elements.adviceContent.textContent = 'Loading advice…';
+
+  try {
+    const response = await fetch('https://api.adviceslip.com/advice');
+    if (!response.ok) throw new Error('Failed to fetch advice');
+
+    const data = await response.json();
+    elements.adviceContent.textContent = data.slip.advice;
+  } catch (error) {
+    elements.adviceContent.textContent = 'Could not load advice. Try again later.';
+    console.log('Advice API unavailable:', error.message);
+  }
+}
+
+// ========================================
+// GitHub API Integration
+// ========================================
+
 async function fetchGitHubStats() {
+  if (!GITHUB_USERNAME) return; // Skip if no username set
+
   try {
     const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
 
@@ -399,7 +429,7 @@ function initTypingAnimation() {
     '<span class="keyword">const</span> <span class="variable">developer</span> = {',
     '  name: <span class="string">"Hawraa Al-Majed"</span>,',
     '  passion: <span class="string">"Building things"</span>,',
-    '  skills: [<span class="string">"JavaScript"</span>, <span class="string">"Python"</span>, <span class="string">"Java"</span>],',
+    '  skills: [<span class="string">"JavaScript"</span>, <span class="string">"Python"</span>, <span class="string">"Java"</span>, <span class="string">"HTML/CSS"</span>, <span class="string">"C++"</span>],',
     '  goal: <span class="string">"Create impact"</span>',
     '};'
   ];
@@ -528,6 +558,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Fetch GitHub data
   fetchGitHubStats();
+
+  // Fetch initial advice
+  fetchAdvice();
+
+  // Advice button
+  if (elements.adviceBtn) {
+    elements.adviceBtn.addEventListener('click', fetchAdvice);
+  }
 
   // Event Listeners
   elements.themeToggle.addEventListener('click', toggleTheme);
