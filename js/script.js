@@ -39,10 +39,8 @@ const elements = {
   badgeName: document.getElementById('badgeName'),
 
   // Countdown
+  monthsEl: document.getElementById('months'),
   daysEl: document.getElementById('days'),
-  hoursEl: document.getElementById('hours'),
-  minutesEl: document.getElementById('minutes'),
-  secondsEl: document.getElementById('seconds'),
 
   // Filter
   filterBtns: document.querySelectorAll('.filter-btn'),
@@ -67,26 +65,32 @@ const elements = {
 // ========================================
 
 function updateCountdown() {
-  const now = new Date().getTime();
-  const distance = GRADUATION_DATE.getTime() - now;
+  const now = new Date();
+  const graduation = GRADUATION_DATE;
 
-  if (distance < 0) {
-    elements.daysEl.textContent = '000';
-    elements.hoursEl.textContent = '00';
-    elements.minutesEl.textContent = '00';
-    elements.secondsEl.textContent = '00';
+  if (graduation < now) {
+    elements.monthsEl.textContent = '00';
+    elements.daysEl.textContent = '00';
     return;
   }
 
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  // Calculate full calendar months
+  let months = (graduation.getFullYear() - now.getFullYear()) * 12;
+  months += graduation.getMonth() - now.getMonth();
 
-  elements.daysEl.textContent = String(days).padStart(3, '0');
-  elements.hoursEl.textContent = String(hours).padStart(2, '0');
-  elements.minutesEl.textContent = String(minutes).padStart(2, '0');
-  elements.secondsEl.textContent = String(seconds).padStart(2, '0');
+  const tempDate = new Date(now);
+  tempDate.setMonth(tempDate.getMonth() + months);
+
+  // Adjust if we've overshot the target date
+  if (tempDate > graduation) {
+    months--;
+    tempDate.setMonth(tempDate.getMonth() - 1);
+  }
+
+  const days = Math.floor((graduation - tempDate) / (1000 * 60 * 60 * 24));
+
+  elements.monthsEl.textContent = String(Math.max(0, months)).padStart(2, '0');
+  elements.daysEl.textContent = String(Math.max(0, days)).padStart(2, '0');
 }
 
 // ========================================
@@ -520,7 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Start countdown
   updateCountdown();
-  setInterval(updateCountdown, 1000);
+  setInterval(updateCountdown, 60000);
 
   // Fetch GitHub data
   fetchGitHubStats();

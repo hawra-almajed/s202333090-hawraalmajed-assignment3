@@ -205,7 +205,7 @@ h2 {
 
 .countdown-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     max-width: 700px;
 }
@@ -616,10 +616,6 @@ button[type="submit"]:hover { opacity: 0.9; }
     h1 { font-size: 2rem; }
 
     section { padding: 2rem 1rem; }
-
-    .countdown-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
 
     .countdown-num { font-size: 2rem; }
 

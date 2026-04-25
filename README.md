@@ -120,7 +120,7 @@ For detailed technical documentation, see [docs/technical-documentation.md](docs
 ### New Features Added
 
 **Graduation Countdown Timer**
-A live countdown (days / hours / minutes / seconds) in its own section that ticks down to graduation day in July 2027. The target date is set in one constant at the top of `script.js` — easy to change. Numbers use tabular-numeral font rendering so the layout never shifts as digits change.
+A live countdown (months / days) in its own section that ticks down to graduation day in July 2027.
 
 **Login & Session State Management**
 A modal with Name, Email, and Password fields handles both registration and sign-in using `localStorage`. Passwords are stored as a djb2 hash (never plain text). On every page load, the session is restored automatically. A fixed badge in the bottom-right corner always shows the logged-in user's first name. The nav Login button also updates to say "Hi, [Name]". Logging out removes only the session token, so the account persists for next time.
